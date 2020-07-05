@@ -11,6 +11,7 @@ namespace Barter.Models
         public User User { get; set; }
         public string Hook { get; set; }
         public string Details { get; set; }
+        public List<Tag> Tags { get; set; }
         public bool IsActive { get; set; }
         public int BarteredUserId { get; set; }
         public int Satisfaction { get; set; }

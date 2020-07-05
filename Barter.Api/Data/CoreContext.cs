@@ -21,6 +21,13 @@ namespace Barter.Api.Data
                 .WithOne(u => u.User)
                 .HasForeignKey(t => t.UserId)
                 .HasPrincipalKey(u => u.Id);
+
+            builder.Entity<Thing>()
+                .HasMany(thing => thing.Tags)
+                .WithOne(tag => tag.Thing)
+                .HasForeignKey(tag => tag.ThingId);
+
+            builder.Entity<Tag>().HasKey(tag => tag.Title);
         }
 
         public DbSet<Barter.Models.User> User { get; set; }
