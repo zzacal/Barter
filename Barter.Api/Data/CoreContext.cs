@@ -15,5 +15,7 @@ namespace Barter.Api.Data
         }
 
         public DbSet<Barter.Models.User> User { get; set; }
+
+        public DbSet<Barter.Models.Friendship> Friendship { get; set; }
     }
 }
