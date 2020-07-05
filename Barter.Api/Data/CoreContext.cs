@@ -14,8 +14,19 @@ namespace Barter.Api.Data
         {
         }
 
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<User>()
+                .HasMany(t => t.Things)
+                .WithOne(u => u.User)
+                .HasForeignKey(t => t.UserId)
+                .HasPrincipalKey(u => u.Id);
+        }
+
         public DbSet<Barter.Models.User> User { get; set; }
 
         public DbSet<Barter.Models.Friendship> Friendship { get; set; }
+
+        public DbSet<Barter.Models.Thing> Thing { get; set; }
     }
 }

@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Barter.Api.Data;
 using Barter.Models;
 using Microsoft.Extensions.Logging;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Barter.Api.Controllers
 {
@@ -32,7 +33,7 @@ namespace Barter.Api.Controllers
 
         // GET: api/Users/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(string id)
+        public async Task<ActionResult<User>> GetUser(int id)
         {
             var user = await _context.User.FindAsync(id);
 
@@ -42,6 +43,16 @@ namespace Barter.Api.Controllers
             }
 
             return user;
+        }
+
+        // GET: Users/5/Things
+        [HttpGet("{id}/Things")]
+        public async Task<ActionResult<IList<Thing>>> GetUserThings(int id)
+        {
+            var user = await _context.User.FindAsync(id);
+            if (user == null)
+                return null;
+            return user.Things.ToList();
         }
 
         // GET: api/Users/5/Friendships
@@ -58,7 +69,7 @@ namespace Barter.Api.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(string id, User user)
+        public async Task<IActionResult> PutUser(int id, User user)
         {
             if (id != user.Id)
             {
@@ -114,7 +125,7 @@ namespace Barter.Api.Controllers
 
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<User>> DeleteUser(string id)
+        public async Task<ActionResult<User>> DeleteUser(int id)
         {
             var user = await _context.User.FindAsync(id);
             if (user == null)
@@ -128,7 +139,7 @@ namespace Barter.Api.Controllers
             return user;
         }
 
-        private bool UserExists(string id)
+        private bool UserExists(int id)
         {
             return _context.User.Any(e => e.Id == id);
         }
